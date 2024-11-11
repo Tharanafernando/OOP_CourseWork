@@ -13,13 +13,7 @@ public class Configuration {
         this.maximumTicketCapacity = maximum;
     }
 
-    public Configuration(){
-        this.totalNumberOfTickets = 0;
-        this.ticketReleaseRate = 0;
-        this.customerRetrievalRate = 0;
-        this.maximumTicketCapacity = 0;
 
-    }
 
     public int getTotalNumberOfTickets() {
         return totalNumberOfTickets;
@@ -38,19 +32,37 @@ public class Configuration {
     }
 
     public void setTotalNumberOfTickets(int total) {
-        this.totalNumberOfTickets = total;
+        if (totalNumberOfTickets > 0){
+            this.totalNumberOfTickets = total;
+        }else {
+            System.out.println("The total number of tickets is less than 0");
+        }
+        //this.totalNumberOfTickets = total;
     }
 
     public void setTicketReleaseRate(double ticket) {
-        this.ticketReleaseRate = ticket;
+        if (ticketReleaseRate > 0){
+            this.ticketReleaseRate = ticket;
+        }
+        else {
+            System.out.println("The ticket release rate is less than 0");
+        }
     }
 
     public void setCustomerRetrievalRate(double customer) {
-        this.customerRetrievalRate = customer;
+        if (customerRetrievalRate > 0){
+            this.customerRetrievalRate = customer;
+        }else {
+            System.out.println("The customer retrieval rate is less than 0");
+        }
     }
 
     public void setMaximumTicketCapacity(int maximum) {
-        this.maximumTicketCapacity = maximum;
+        if (maximumTicketCapacity > 0){
+            this.maximumTicketCapacity = maximum;
+        }else {
+            System.out.println("The maximum ticket capacity is less than 0");
+        }
     }
 
 
