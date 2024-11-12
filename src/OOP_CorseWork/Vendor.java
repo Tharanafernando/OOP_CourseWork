@@ -9,8 +9,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Vendor implements Runnable {
     private String name;
     private String NIC;
-    private int noOfTickets;
-    private static TicketPool ticketPool;
+    private static int noOfTickets;
+    private TicketPool ticketPool;
 
     public Vendor(String name, String NIC,int noOfTickets) {
         this.name = name;
@@ -30,6 +30,9 @@ public class Vendor implements Runnable {
         NIC = input.nextLine();
         System.out.println("No of tickets to release: ");
         noOfTickets = input.nextInt();
+
+        Configuration c1 = new Configuration(noOfTickets);
+        c1.setTotalNumberOfTickets(noOfTickets);
 
         try {
             ticketPool = new TicketPool();
