@@ -1,20 +1,21 @@
 package OOP_CorseWork;
 
+import java.util.Scanner;
+
 public class Configuration {
     private int totalNumberOfTickets;
     private double ticketReleaseRate;
     private double customerRetrievalRate;
     private int maximumTicketCapacity;
 
-    public Configuration(double ticket, double customer, int maximum) {
+    public Configuration(int maximum,int total,double ticket, double customer) {
+        this.totalNumberOfTickets = total;
         this.ticketReleaseRate = ticket;
         this.customerRetrievalRate = customer;
         this.maximumTicketCapacity = maximum;
     }
 
-    public Configuration(int total){
-        this.totalNumberOfTickets = total;
-    }
+
 
 
 
@@ -37,41 +38,89 @@ public class Configuration {
     }
 
     public void setTotalNumberOfTickets(int total) {
-//        if (totalNumberOfTickets > 0){
-//            this.totalNumberOfTickets = total;
-//        }else {
-//            System.out.println("The total number of tickets is less than 0");
-//        }
-        this.totalNumberOfTickets = total;
+            try{
+                Scanner sc = new Scanner(System.in);
+                if (total <= 0){
+                    while (total<=0){
+                        System.out.println("total tickets should be greater than 0 otherwise total tickets automatically will convert to 1");
+                        total = 1;
+                        System.out.println("Now total number of ticket is 1");
+                        System.out.println("If you want enter again press Q");
+                        String confirm = sc.nextLine();
+                        if (confirm.equals("Q")){
+                            System.out.print("Enter again: ");
+                            totalNumberOfTickets = sc.nextInt();
+                            System.out.println(" ");
+                            if (totalNumberOfTickets <= 0){
+                                total = 0;
+                            }
+                        }else{
+                            break;
+                        }
+
+                    }
+
+
+
+
+                }
+
+                else{
+                    this.totalNumberOfTickets = total;
+
+
+
+                }
+
+            } catch (RuntimeException e) {
+                throw new RuntimeException(e);
+            }
+
+
+
+
+
+
     }
 
     public void setTicketReleaseRate(double ticket) {
-        this.ticketReleaseRate = ticket;
-//        if (ticketReleaseRate > 0){
-//            this.ticketReleaseRate = ticket;
-//        }
-//        else {
-//            System.out.println("The ticket release rate is less than 0");
-//        }
+        if (ticket <= 0){
+            System.out.println("ticket should be greater than 0");
+        }else {
+            this.ticketReleaseRate = ticket;
+        }
+
     }
 
     public void setCustomerRetrievalRate(double customer) {
         this.customerRetrievalRate = customer;
-//        if (customerRetrievalRate > 0){
-//            this.customerRetrievalRate = customer;
-//        }else {
-//            System.out.println("The customer retrieval rate is less than 0");
-//        }
     }
 
     public void setMaximumTicketCapacity(int maximum) {
-        this.maximumTicketCapacity = maximum;
-//        if (maximumTicketCapacity > 0){
-//            this.maximumTicketCapacity = maximum;
-//        }else {
-//            System.out.println("The maximum ticket capacity is less than 0");
-//        }
+
+            if (maximum<=0){
+                System.out.println("maximum number of tickets should be greater than 0");
+
+
+            }
+            else{
+                this.maximumTicketCapacity = maximum;
+
+
+            }
+
+
+
+
+
+
+
+
     }
+
+
+
+
 
 
 }

@@ -1,54 +1,48 @@
 package OOP_CorseWork;
 
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Vendor implements Runnable {
     private String name;
     private String NIC;
-    private static int noOfTickets;
+    private double releaseRate;
     private TicketPool ticketPool;
-
-    public Vendor(String name, String NIC,int noOfTickets) {
-        this.name = name;
-        this.NIC = NIC;
-        this.noOfTickets = noOfTickets;
+    private Configuration configuration;
+    private static LinkedList<Ticket> ticketManagement;
 
 
-    }
 
-        @Override
+
+    @Override
     public void run() {
+        System.out.println("Thread Started");
+        System.out.println(" ");
 
         Scanner input = new Scanner(System.in);
         System.out.println("Enter your name: ");
         name = input.nextLine();
         System.out.println("Enter your NIC: ");
         NIC = input.nextLine();
-        System.out.println("No of tickets to release: ");
-        noOfTickets = input.nextInt();
+        System.out.println("Enter ticket release rate: ");
+        releaseRate = input.nextDouble();
 
-        Configuration c1 = new Configuration(noOfTickets);
-        c1.setTotalNumberOfTickets(noOfTickets);
+        configuration = new Configuration(0,0,releaseRate,0);
+
+
+
 
         try {
+
             ticketPool = new TicketPool();
             ticketPool.addTicket();
             Thread.sleep(1000);
         } catch (InterruptedException e) {
+            System.out.println("Thread interrupted");
             throw new RuntimeException(e);
         }
 
     }
-
-
-
-
-
-
-
 
 }

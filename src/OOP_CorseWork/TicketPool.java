@@ -1,59 +1,61 @@
 package OOP_CorseWork;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class TicketPool {
 
     private static Vendor vendor;
     private static Consumer consumer;
-   // private static int totalNumberOfTickets;
-    private static double ticketRate;
-    private static double customerPrice;
-    private static int maximumTicketCapacity;
+    private static Configuration configuration;
+
+   // private static Configuration configuration;
+    private static LinkedList<Ticket> ticketPool;
 
 
 
     public static void main(String[] args) {
+        configuration = new Configuration(0,0,0,0);
         Scanner sc = new Scanner(System.in);
-        Configuration configuration = new Configuration(ticketRate,customerPrice,maximumTicketCapacity);
+        System.out.println("Enter max capacity: ");
+        int maxCapacity = sc.nextInt();
+        configuration.setMaximumTicketCapacity(maxCapacity);
+
+
+        System.out.println("Enter number of tickets: ");
+        int noOfTickets = sc.nextInt();
+        configuration.setTotalNumberOfTickets(noOfTickets);
+
+
+        vendor = new Vendor();
+
         try{
-            System.out.println("maximum ticket capacity: ");
-            maximumTicketCapacity = sc.nextInt();
-            configuration.setMaximumTicketCapacity(maximumTicketCapacity);
+            Thread v1 = new Thread(vendor);
 
-            System.out.println("give no of tickets: ");
-            vendor.run();
-//            totalNumberOfTickets = sc.nextInt();
-//            if (totalNumberOfTickets < configuration.getMaximumTicketCapacity()) {
-//                addTicket();
-//            }
-
-
-            System.out.println("give ticket release rate: ");
-            ticketRate = sc.nextDouble();
-            configuration.setTicketReleaseRate(ticketRate);
-
-            System.out.println("give customer retrieval price: ");
-            customerPrice = sc.nextDouble();
-            configuration.setCustomerRetrievalRate(customerPrice);
-
-
-
+            v1.start();
+            v1.join();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+        System.out.println("Enter customer retrieval rate: ");
+        double customerRetrievalRate = sc.nextDouble();
+        configuration = new Configuration(maxCapacity,noOfTickets,0,customerRetrievalRate);
+
 
     }
+
+
 
     public synchronized static void removeTicket(){
-        
 
     }
 
-    public synchronized static void addTicket(){
-//        for (int i = 0; i < totalNumberOfTickets; i++) {
-//            System.out.println("Ticket has been created");
-//        }
+    public synchronized void addTicket(){
+        System.out.println("ticket added successfully");
+
+
+
     }
+
 }
