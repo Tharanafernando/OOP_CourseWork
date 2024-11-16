@@ -38,54 +38,29 @@ public class Configuration {
     }
 
     public void setTotalNumberOfTickets(int total) {
-            try{
+        if (this.totalNumberOfTickets<=0){
+            do {
                 Scanner sc = new Scanner(System.in);
-                if (total <= 0){
-                    while (total<=0){
-                        System.out.println("total tickets should be greater than 0 otherwise total tickets automatically will convert to 1");
-                        total = 1;
-                        System.out.println("Now total number of ticket is 1");
-                        System.out.println("If you want enter again press Q");
-                        String confirm = sc.nextLine();
-                        if (confirm.equals("Q")){
-                            System.out.print("Enter again: ");
-                            totalNumberOfTickets = sc.nextInt();
-                            System.out.println(" ");
-                            if (totalNumberOfTickets <= 0){
-                                total = 0;
-                            }
-                        }else{
-                            break;
-                        }
+                System.out.println("Please enter a number greater than 0");
+                this.totalNumberOfTickets = sc.nextInt();
 
-                    }
+            } while (this.totalNumberOfTickets <= 0);
 
-
-
-
-                }
-
-                else{
-                    this.totalNumberOfTickets = total;
-
-
-
-                }
-
-            } catch (RuntimeException e) {
-                throw new RuntimeException(e);
-            }
-
-
-
-
-
+        }else {
+            this.totalNumberOfTickets = total;
+        }
 
     }
 
     public void setTicketReleaseRate(double ticket) {
-        if (ticket <= 0){
-            System.out.println("ticket should be greater than 0");
+        if (this.ticketReleaseRate<=0){
+            do {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Please enter a number greater than 0");
+                this.ticketReleaseRate = sc.nextInt();
+
+            } while (this.ticketReleaseRate <= 0);
+
         }else {
             this.ticketReleaseRate = ticket;
         }
@@ -93,21 +68,32 @@ public class Configuration {
     }
 
     public void setCustomerRetrievalRate(double customer) {
-        this.customerRetrievalRate = customer;
+        if (this.customerRetrievalRate<=0){
+            do {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Please enter a number greater than 0");
+                this.customerRetrievalRate = sc.nextInt();
+
+            } while (this.customerRetrievalRate <= 0);
+
+        }else {
+            this.customerRetrievalRate = customer;
+        }
     }
 
     public void setMaximumTicketCapacity(int maximum) {
 
-            if (maximum<=0){
-                System.out.println("maximum number of tickets should be greater than 0");
+        if (this.maximumTicketCapacity<=0){
+            do {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Please enter a number greater than 0");
+                this.maximumTicketCapacity = sc.nextInt();
 
+            } while (this.maximumTicketCapacity <= 0);
 
-            }
-            else{
-                this.maximumTicketCapacity = maximum;
-
-
-            }
+        }else {
+            this.maximumTicketCapacity = maximum;
+        }
 
 
 

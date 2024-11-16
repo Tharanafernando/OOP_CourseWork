@@ -25,7 +25,7 @@ public class TicketPool {
         System.out.println("Enter number of tickets: ");
         int noOfTickets = sc.nextInt();
         configuration.setTotalNumberOfTickets(noOfTickets);
-
+        System.out.println(configuration.getTotalNumberOfTickets());
 
         vendor = new Vendor();
 
