@@ -21,6 +21,7 @@ public class Configuration {
 
 
 
+
     public int getTotalNumberOfTickets() {
         return totalNumberOfTickets;
     }
@@ -38,7 +39,7 @@ public class Configuration {
     }
 
     public void setTotalNumberOfTickets(int total) {
-        if (this.totalNumberOfTickets<=0){
+        if (total<=0){
             do {
                 Scanner sc = new Scanner(System.in);
                 System.out.println("Please enter a number greater than 0");
@@ -48,6 +49,15 @@ public class Configuration {
 
         }else {
             this.totalNumberOfTickets = total;
+        }
+
+        if (this.totalNumberOfTickets > getMaximumTicketCapacity()){
+            do {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Please enter a number greater than 0");
+                this.totalNumberOfTickets = sc.nextInt();
+
+            } while (this.totalNumberOfTickets > maximumTicketCapacity);
         }
 
     }
@@ -68,7 +78,7 @@ public class Configuration {
     }
 
     public void setCustomerRetrievalRate(double customer) {
-        if (this.customerRetrievalRate<=0){
+        if (customer<=0){
             do {
                 Scanner sc = new Scanner(System.in);
                 System.out.println("Please enter a number greater than 0");
@@ -83,24 +93,21 @@ public class Configuration {
 
     public void setMaximumTicketCapacity(int maximum) {
 
-        if (this.maximumTicketCapacity<=0){
-            do {
-                Scanner sc = new Scanner(System.in);
+        if (maximum<=0){
+            Scanner sc = new Scanner(System.in);
+            while(true){
                 System.out.println("Please enter a number greater than 0");
-                this.maximumTicketCapacity = sc.nextInt();
+                this.maximumTicketCapacity= sc.nextInt();
+                maximum = this.maximumTicketCapacity;
+                if (maximum<=0){
+                    continue;
+                }break;
 
-            } while (this.maximumTicketCapacity <= 0);
 
-        }else {
-            this.maximumTicketCapacity = maximum;
+            }
+
         }
-
-
-
-
-
-
-
+        this.maximumTicketCapacity = maximum;
 
     }
 

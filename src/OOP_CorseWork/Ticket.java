@@ -2,13 +2,13 @@ package OOP_CorseWork;
 
 public class Ticket {
     private int ticketNo;
-    private String tikcetName;
+    private String ticketName;
     private double ticketPrice;
 
 
-    public Ticket(int ticketNo,String tikcetName, double ticketPrice) {
+    public Ticket(int ticketNo,String ticketName, double ticketPrice) {
         this.ticketNo = ticketNo;
-        this.tikcetName = tikcetName;
+        this.ticketName = ticketName;
         this.ticketPrice = ticketPrice;
     }
 
@@ -16,8 +16,8 @@ public class Ticket {
         return ticketNo;
     }
 
-    public String getTikcetName() {
-        return tikcetName;
+    public String getTicketName() {
+        return ticketName;
     }
 
     public double getTicketPrice() {
@@ -28,8 +28,8 @@ public class Ticket {
         this.ticketNo = ticketNo;
     }
 
-    public void setTikcetName(String tikcetName) {
-        this.tikcetName = tikcetName;
+    public void setTicketName(String ticketName) {
+        this.ticketName = ticketName;
     }
 
     public void setTicketPrice(double ticketPrice) {

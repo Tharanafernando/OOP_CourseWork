@@ -12,7 +12,10 @@ public class Vendor implements Runnable {
     private Configuration configuration;
     private static LinkedList<Ticket> ticketManagement;
 
+    public Vendor(double releaseRate){
+        this.releaseRate = releaseRate;
 
+    }
 
 
     @Override
@@ -25,17 +28,22 @@ public class Vendor implements Runnable {
         name = input.nextLine();
         System.out.println("Enter your NIC: ");
         NIC = input.nextLine();
+
         System.out.println("Enter ticket release rate: ");
         releaseRate = input.nextDouble();
 
+
         configuration = new Configuration(0,0,releaseRate,0);
+        configuration.setTicketReleaseRate(releaseRate);
+
+
 
 
 
 
         try {
-
             ticketPool = new TicketPool();
+
             ticketPool.addTicket();
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -44,5 +52,10 @@ public class Vendor implements Runnable {
         }
 
     }
+
+    public double getReleaseRate() {
+        return releaseRate;
+    }
+
 
 }
