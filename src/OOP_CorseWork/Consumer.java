@@ -1,43 +1,48 @@
 package OOP_CorseWork;
 
-import java.util.Scanner;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+
 
 public class Consumer implements Runnable {
-    private static TicketPool ticketPool;
-    private static String name;
-    private static String NIC;
-    private static int noOfBuyingTickets;
+    private final TicketPool ticketPool;
+    private String name;
+    private String NIC;
+    private Configuration configuration;
 
-    public Consumer(TicketPool ticketPool, String name, String NIC) {
+    public Consumer(TicketPool ticketPool) {
         this.ticketPool = ticketPool;
-        this.name = name;
-        this.NIC = NIC;
+
+
+
+    }
+
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
     public void run() {
+        //configuration = new Configuration();
+
+
+
+        if(configuration == null) {
+            System.out.println("No configuration found");
+        }
+
+
+
+        System.out.println("Customer thread is going to start...");
+        for (int i = 1; i < configuration.getMaximumTicketCapacity(); i++) {
+            ticketPool.removeTicket("Ticket bought: Ticket number "+i);
+        }
 
         try {
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.println("Enter your name: ");
-            name = scanner.nextLine();
-
-            System.out.println("Enter your NIC: ");
-            NIC = scanner.nextLine();
-
-            System.out.println("Enter your no of buying tickets: ");
-            noOfBuyingTickets = scanner.nextInt();
-
-
-            ticketPool.removeTicket();
-            Thread.sleep(1000);
+            System.out.println("Customer waiting for tickets");
+            Thread.sleep(configuration.getCustomerRetrievalRate());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
 
 
 

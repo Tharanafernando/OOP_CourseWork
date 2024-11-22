@@ -1,61 +1,51 @@
 package OOP_CorseWork;
 
 
-import java.util.LinkedList;
-import java.util.Scanner;
+
 
 public class Vendor implements Runnable {
     private String name;
     private String NIC;
-    private double releaseRate;
-    private TicketPool ticketPool;
+
+    private final TicketPool ticketPool;
     private Configuration configuration;
-    private static LinkedList<Ticket> ticketManagement;
 
-    public Vendor(double releaseRate){
-        this.releaseRate = releaseRate;
 
+    public Vendor(TicketPool ticketPool) {
+        this.ticketPool = ticketPool;
+    }
+
+
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 
 
     @Override
     public void run() {
-        System.out.println("Thread Started");
-        System.out.println(" ");
+       // configuration = new Configuration();
 
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter your name: ");
-        name = input.nextLine();
-        System.out.println("Enter your NIC: ");
-        NIC = input.nextLine();
-
-        System.out.println("Enter ticket release rate: ");
-        releaseRate = input.nextDouble();
-
-
-        configuration = new Configuration(0,0,releaseRate,0);
-        configuration.setTicketReleaseRate(releaseRate);
-
-
-
-
-
-
-        try {
-            ticketPool = new TicketPool();
-
-            ticketPool.addTicket();
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            System.out.println("Thread interrupted");
-            throw new RuntimeException(e);
+        if (configuration == null) {
+            System.out.println("Configuration is null can not execute");
         }
 
+
+        System.out.println("Vendor Thread is going to start....");
+        for (int i = 1; i< configuration.getMaximumTicketCapacity();i++){
+            ticketPool.addTicket("Ticket added: Ticket number "+i);
+        }
+
+        try {
+
+            System.out.println("Vendor thread is going to add tickets");
+            Thread.sleep(configuration.getTicketReleaseRate());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Vendor thread wakes up");
+
+
+
     }
-
-    public double getReleaseRate() {
-        return releaseRate;
-    }
-
-
 }

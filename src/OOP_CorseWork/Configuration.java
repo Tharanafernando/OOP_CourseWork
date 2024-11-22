@@ -4,21 +4,23 @@ import java.util.Scanner;
 
 public class Configuration {
     private int totalNumberOfTickets;
-    private double ticketReleaseRate;
-    private double customerRetrievalRate;
+    private long ticketReleaseRate;
+    private long customerRetrievalRate;
     private int maximumTicketCapacity;
 
-    public Configuration(int maximum,int total,double ticket, double customer) {
+    public Configuration(int maximum,int total,long ticket, long customer) {
         this.totalNumberOfTickets = total;
         this.ticketReleaseRate = ticket;
         this.customerRetrievalRate = customer;
         this.maximumTicketCapacity = maximum;
     }
 
-
-
-
-
+    public Configuration(){
+        this.totalNumberOfTickets = 0;
+        this.ticketReleaseRate = 0;
+        this.customerRetrievalRate = 0;
+        this.maximumTicketCapacity = 0;
+    }
 
 
 
@@ -26,11 +28,11 @@ public class Configuration {
         return totalNumberOfTickets;
     }
 
-    public double getTicketReleaseRate(){
+    public long getTicketReleaseRate() {
         return ticketReleaseRate;
     }
 
-    public double getCustomerRetrievalRate(){
+    public long getCustomerRetrievalRate(){
         return customerRetrievalRate;
     }
 
@@ -39,56 +41,56 @@ public class Configuration {
     }
 
     public void setTotalNumberOfTickets(int total) {
+
         if (total<=0){
-            do {
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Please enter a number greater than 0");
-                this.totalNumberOfTickets = sc.nextInt();
+            System.out.println("Please enter a positive number or greater than 0");
 
-            } while (this.totalNumberOfTickets <= 0);
-
-        }else {
+        }else{
             this.totalNumberOfTickets = total;
+
+
         }
 
-        if (this.totalNumberOfTickets > getMaximumTicketCapacity()){
-            do {
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Please enter a number greater than 0");
-                this.totalNumberOfTickets = sc.nextInt();
-
-            } while (this.totalNumberOfTickets > maximumTicketCapacity);
-        }
 
     }
 
-    public void setTicketReleaseRate(double ticket) {
-        if (this.ticketReleaseRate<=0){
-            do {
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Please enter a number greater than 0");
-                this.ticketReleaseRate = sc.nextInt();
-
-            } while (this.ticketReleaseRate <= 0);
-
-        }else {
+    public void setTicketReleaseRate(long ticket) {
+        if (ticket<=0){
+            System.out.println("Please enter a positive number or greater than 0");
+        }else{
             this.ticketReleaseRate = ticket;
         }
+//        if (this.ticketReleaseRate<=0){
+//            do {
+//                Scanner sc = new Scanner(System.in);
+//                System.out.println("Please enter a number greater than 0");
+//                this.ticketReleaseRate = sc.nextInt();
+//
+//            } while (this.ticketReleaseRate <= 0);
+//
+//        }else {
+//            this.ticketReleaseRate = ticket;
+//        }
 
     }
 
-    public void setCustomerRetrievalRate(double customer) {
+    public void setCustomerRetrievalRate(long customer) {
         if (customer<=0){
-            do {
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Please enter a number greater than 0");
-                this.customerRetrievalRate = sc.nextInt();
-
-            } while (this.customerRetrievalRate <= 0);
-
-        }else {
+            System.out.println("Please enter a positive number or greater than 0");
+        }else{
             this.customerRetrievalRate = customer;
         }
+//        if (customer<=0){
+//            do {
+//                Scanner sc = new Scanner(System.in);
+//                System.out.println("Please enter a number greater than 0");
+//                this.customerRetrievalRate = sc.nextInt();
+//
+//            } while (this.customerRetrievalRate <= 0);
+//
+//        }  else {
+//            this.customerRetrievalRate = customer;
+//        }
     }
 
     public void setMaximumTicketCapacity(int maximum) {
