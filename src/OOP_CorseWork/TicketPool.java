@@ -3,12 +3,17 @@ package OOP_CorseWork;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 
 public class TicketPool {
 
     private LinkedList<String> ticket;
     private static Configuration configuration;
     private Vendor vendor;
+    private Lock lock;
+
 
     public TicketPool(Configuration configuration) {
         ticket = new LinkedList<>();
@@ -18,8 +23,9 @@ public class TicketPool {
 
 
     public synchronized void addTicket(String ticketAdingString) {
-
+        lock = new ReentrantLock();
         while (ticket.size()>= configuration.getTotalNumberOfTickets()){
+
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -27,14 +33,22 @@ public class TicketPool {
             }
         }
 
-        this.ticket.add(ticketAdingString);
-        System.out.println(ticketAdingString+" added to the pool");
-        notifyAll();
+        try{
+            lock.lock();
+            this.ticket.add(ticketAdingString);
+            System.out.println(ticketAdingString+" added to the pool");
+            notifyAll();
+        }catch(Exception e){
+            lock.unlock();
+        }
+
+
 
 
     }
 
     public synchronized void removeTicket(String ticketBuyingString) {
+        Lock lock = new ReentrantLock();
         while (ticket.isEmpty()){
             try {
                 wait();
@@ -44,9 +58,17 @@ public class TicketPool {
 
         }
 
-        this.ticket.remove(ticketBuyingString);
-        System.out.println(ticketBuyingString+" removed from the pool");
-        notifyAll();
+        try {
+            lock.lock();
+            this.ticket.remove(ticketBuyingString);
+            System.out.println(ticketBuyingString+" removed from the pool");
+            notifyAll();
+        }catch(Exception e){
+            lock.unlock();
+        }
+
+
+
 
     }
 

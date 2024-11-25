@@ -1,14 +1,16 @@
 package OOP_CorseWork;
 
 
-
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Vendor implements Runnable {
     private String name;
     private String NIC;
-
+   // private Lock lock = new ReentrantLock();
     private final TicketPool ticketPool;
     private Configuration configuration;
+
 
 
     public Vendor(TicketPool ticketPool) {
@@ -32,8 +34,11 @@ public class Vendor implements Runnable {
 
 
         System.out.println("Vendor Thread is going to start....");
+
         for (int i = 1; i< configuration.getMaximumTicketCapacity();i++){
             ticketPool.addTicket("Ticket added: Ticket number "+i);
+
+
         }
 
         try {

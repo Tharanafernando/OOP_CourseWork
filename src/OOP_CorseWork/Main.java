@@ -4,36 +4,58 @@ package OOP_CorseWork;
 import java.util.Scanner;
 
 public class Main {
-    private static Configuration configuration;
+    private int total;
+    private int max;
+    private long rate;
+    private long customerRate;
 
 
 
+  //  private static Configuration configuration;
     public static void main(String[] args) throws InterruptedException {
-       // Configuration configuration = new Configuration();
+
+        Main main = new Main();
+        main.takeInput();
 
 
+    }
 
+
+    public void takeInput(){
         Scanner sc = new Scanner(System.in);
+        Configuration configuration = new Configuration(max,total,rate,customerRate);
 
-        System.out.println("Input Max Ticket Capacity:");
-        int max = sc.nextInt();
-       // configuration.setMaximumTicketCapacity(max);
 
 
         System.out.println("Input Total Number of Tickets:");
-        int total = sc.nextInt();
-       // configuration.setTotalNumberOfTickets(total);
+        total = sc.nextInt();
+        configuration.setTotalNumberOfTickets(total);
+
+
+
+        System.out.println("Input Max Ticket Capacity:");
+        max = sc.nextInt();
+        configuration.setMaximumTicketCapacity(max);
+
+
+
 
 
         System.out.println("Input Ticket Release Rate: ");
-        long rate = sc.nextLong();
-       // configuration.setTicketReleaseRate(rate);
+        rate = sc.nextLong();
+        // configuration.setTicketReleaseRate(rate);
 
         System.out.println("Input Customer Retrieval Rate: ");
-        long customerRate = sc.nextLong();
-       // configuration.setCustomerRetrievalRate(customerRate);
+        customerRate = sc.nextLong();
+        // configuration.setCustomerRetrievalRate(customerRate);
+
+
 
         configuration = new Configuration(max, total, rate, customerRate);
+
+       // configuration(max,total,rate,customerRate);
+        System.out.println("Total number of tickets: "+configuration.getTotalNumberOfTickets());
+        System.out.println("Max capacity is: "+configuration.getMaximumTicketCapacity());
         TicketPool ticketPool = new TicketPool(configuration);
 
 
@@ -47,11 +69,13 @@ public class Main {
         Thread consumerThread = new Thread(consumer);
 
         vendorThread.start();
+
         consumerThread.start();
 
 
-        vendorThread.join();
-        consumerThread.join();
+
+
+
     }
 
 

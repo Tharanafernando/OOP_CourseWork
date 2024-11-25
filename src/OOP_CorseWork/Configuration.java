@@ -15,12 +15,7 @@ public class Configuration {
         this.maximumTicketCapacity = maximum;
     }
 
-    public Configuration(){
-        this.totalNumberOfTickets = 0;
-        this.ticketReleaseRate = 0;
-        this.customerRetrievalRate = 0;
-        this.maximumTicketCapacity = 0;
-    }
+
 
 
 
@@ -41,75 +36,93 @@ public class Configuration {
     }
 
     public void setTotalNumberOfTickets(int total) {
-
-        if (total<=0){
-            System.out.println("Please enter a positive number or greater than 0");
-
+        if(total<=0){
+            System.out.println("Total number of tickets must be greater than 0");
+            checkPositive(1);
         }else{
             this.totalNumberOfTickets = total;
-
-
         }
+
+
 
 
     }
 
     public void setTicketReleaseRate(long ticket) {
         if (ticket<=0){
-            System.out.println("Please enter a positive number or greater than 0");
+            System.out.println("INVALID NUMBER");
+            checkPositive(2);
         }else{
             this.ticketReleaseRate = ticket;
         }
-//        if (this.ticketReleaseRate<=0){
-//            do {
-//                Scanner sc = new Scanner(System.in);
-//                System.out.println("Please enter a number greater than 0");
-//                this.ticketReleaseRate = sc.nextInt();
-//
-//            } while (this.ticketReleaseRate <= 0);
-//
-//        }else {
-//            this.ticketReleaseRate = ticket;
-//        }
+
+
+
+
 
     }
 
     public void setCustomerRetrievalRate(long customer) {
         if (customer<=0){
             System.out.println("Please enter a positive number or greater than 0");
+            checkPositive(3);
         }else{
             this.customerRetrievalRate = customer;
         }
-//        if (customer<=0){
-//            do {
-//                Scanner sc = new Scanner(System.in);
-//                System.out.println("Please enter a number greater than 0");
-//                this.customerRetrievalRate = sc.nextInt();
-//
-//            } while (this.customerRetrievalRate <= 0);
-//
-//        }  else {
-//            this.customerRetrievalRate = customer;
-//        }
+
     }
 
     public void setMaximumTicketCapacity(int maximum) {
-
-        if (maximum<=0){
-            Scanner sc = new Scanner(System.in);
-            while(true){
-                System.out.println("Please enter a number greater than 0");
-                this.maximumTicketCapacity= sc.nextInt();
-                maximum = this.maximumTicketCapacity;
-                if (maximum<=0){
-                    continue;
-                }break;
-
-
-            }
-
+        if(maximum<=0){
+            System.out.println("Please enter a positive number or greater than 0");
+            checkPositive(4);
+        }else {
+            this.maximumTicketCapacity = maximum;
         }
-        this.maximumTicketCapacity = maximum;
+
+        if (maximum>totalNumberOfTickets){
+            System.out.println("Maximum number of tickets should lower than total number of tickets");
+        }else{
+            this.maximumTicketCapacity = maximum;
+        }
+
+    }
+
+
+    public void checkPositive(int num){
+        Scanner input = new Scanner(System.in);
+        switch(num){
+            case 1:
+                while (true){
+                    System.out.println("Please enter a positive number or greater than 0");
+                    int tot;
+                    tot = input.nextInt();
+                    if(tot>0){
+                        this.totalNumberOfTickets = tot;
+                        break;
+                    }
+
+                }
+
+                break;
+            case 2:
+                if(ticketReleaseRate<=0){
+                    System.out.println("Please enter a positive number or greater than 0");
+                }
+                break;
+            case 3:
+                if(customerRetrievalRate<=0){
+                    System.out.println("Please enter a positive number or greater than 0");
+                }
+                break;
+            case 4:
+                if(maximumTicketCapacity<=0){
+                    System.out.println("Please enter a positive number or greater than 0");
+                }
+                break;
+        }
+
+
 
     }
 
