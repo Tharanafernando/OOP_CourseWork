@@ -8,7 +8,7 @@ public class Main {
     private int max;
     private long rate;
     private long customerRate;
-
+    private final Configuration configuration = new Configuration(max,total,rate,customerRate);
 
 
   //  private static Configuration configuration;
@@ -23,7 +23,7 @@ public class Main {
 
     public void takeInput(){
         Scanner sc = new Scanner(System.in);
-        Configuration configuration = new Configuration(max,total,rate,customerRate);
+
 
 
 
@@ -43,19 +43,19 @@ public class Main {
 
         System.out.println("Input Ticket Release Rate: ");
         rate = sc.nextLong();
-        // configuration.setTicketReleaseRate(rate);
+        configuration.setTicketReleaseRate(rate);
 
         System.out.println("Input Customer Retrieval Rate: ");
-        customerRate = sc.nextLong();
-        // configuration.setCustomerRetrievalRate(customerRate);
+         customerRate = sc.nextLong();
+        configuration.setCustomerRetrievalRate(customerRate);
 
 
 
-        configuration = new Configuration(max, total, rate, customerRate);
 
-       // configuration(max,total,rate,customerRate);
         System.out.println("Total number of tickets: "+configuration.getTotalNumberOfTickets());
         System.out.println("Max capacity is: "+configuration.getMaximumTicketCapacity());
+        System.out.println("Ticket release rate is: "+configuration.getTicketReleaseRate());
+        System.out.println("Customer retrieval rate is: "+configuration.getCustomerRetrievalRate());
         TicketPool ticketPool = new TicketPool(configuration);
 
 

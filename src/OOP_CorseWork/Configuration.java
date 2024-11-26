@@ -37,7 +37,6 @@ public class Configuration {
 
     public void setTotalNumberOfTickets(int total) {
         if(total<=0){
-            System.out.println("Total number of tickets must be greater than 0");
             checkPositive(1);
         }else{
             this.totalNumberOfTickets = total;
@@ -50,7 +49,6 @@ public class Configuration {
 
     public void setTicketReleaseRate(long ticket) {
         if (ticket<=0){
-            System.out.println("INVALID NUMBER");
             checkPositive(2);
         }else{
             this.ticketReleaseRate = ticket;
@@ -64,7 +62,6 @@ public class Configuration {
 
     public void setCustomerRetrievalRate(long customer) {
         if (customer<=0){
-            System.out.println("Please enter a positive number or greater than 0");
             checkPositive(3);
         }else{
             this.customerRetrievalRate = customer;
@@ -74,17 +71,16 @@ public class Configuration {
 
     public void setMaximumTicketCapacity(int maximum) {
         if(maximum<=0){
-            System.out.println("Please enter a positive number or greater than 0");
             checkPositive(4);
         }else {
             this.maximumTicketCapacity = maximum;
         }
 
-        if (maximum>totalNumberOfTickets){
-            System.out.println("Maximum number of tickets should lower than total number of tickets");
-        }else{
-            this.maximumTicketCapacity = maximum;
-        }
+//        if (maximum>totalNumberOfTickets){
+//            System.out.println("Maximum number of tickets should lower than total number of tickets");
+//        }else{
+//            this.maximumTicketCapacity = maximum;
+//        }
 
     }
 
@@ -98,7 +94,7 @@ public class Configuration {
                     int tot;
                     tot = input.nextInt();
                     if(tot>0){
-                        this.totalNumberOfTickets = tot;
+                        setTotalNumberOfTickets(tot);
                         break;
                     }
 
@@ -106,19 +102,44 @@ public class Configuration {
 
                 break;
             case 2:
-                if(ticketReleaseRate<=0){
+                while (true){
                     System.out.println("Please enter a positive number or greater than 0");
+                    long rate;
+                    rate = input.nextLong();
+                    if(rate >0){
+                        setTicketReleaseRate(rate);
+                        break;
+                    }
+
                 }
                 break;
             case 3:
-                if(customerRetrievalRate<=0){
+                while (true){
                     System.out.println("Please enter a positive number or greater than 0");
+                    long customerRate;
+                    customerRate = input.nextInt();
+                    if(customerRate>0){
+                        setCustomerRetrievalRate(customerRate);
+                        break;
+                    }
+
                 }
+
                 break;
             case 4:
-                if(maximumTicketCapacity<=0){
+
+                while (true){
                     System.out.println("Please enter a positive number or greater than 0");
+                    int max;
+                    max = input.nextInt();
+                    if(max>0){
+                        setMaximumTicketCapacity(max);
+                        break;
+                    }
+
                 }
+
+
                 break;
         }
 

@@ -9,7 +9,7 @@ public class Consumer implements Runnable {
     private String name;
     private String NIC;
     private Configuration configuration;
-    private Lock lock = new ReentrantLock();
+
 
     public Consumer(TicketPool ticketPool) {
         this.ticketPool = ticketPool;
