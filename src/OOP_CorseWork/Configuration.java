@@ -1,5 +1,8 @@
 package OOP_CorseWork;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Configuration {
@@ -145,6 +148,35 @@ public class Configuration {
 
 
 
+    }
+
+    public void savetoTextFile(){
+        File myfile = new File("NewFile.txt");
+        try {
+            if(myfile.createNewFile()){
+                System.out.println("File Created");
+            }else{
+                System.out.println("File Already Exists");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            FileWriter newFile = new FileWriter("NewFile.txt");
+
+            newFile.write(
+                    "Maximum Capacity :"+getMaximumTicketCapacity()+ " "+
+                        "Total number of tickets: "+getTotalNumberOfTickets()+" "+
+                        "Ticket release rate: "+getTicketReleaseRate()+" "+
+                        "Customer retrieval rate: "+getTotalNumberOfTickets()
+                         );
+            newFile.close();
+            System.out.println("Successfully write to the file");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

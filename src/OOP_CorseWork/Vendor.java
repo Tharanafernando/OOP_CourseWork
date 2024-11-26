@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Vendor implements Runnable {
     private String name;
     private String NIC;
-   // private Lock lock = new ReentrantLock();
+
     private final TicketPool ticketPool;
     private Configuration configuration;
 

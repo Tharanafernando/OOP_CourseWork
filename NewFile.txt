@@ -1,0 +1,1 @@
+Maximum Capacity :50 Total number of tickets: 100 Ticket release rate: 1000 Customer retrieval rate: 100

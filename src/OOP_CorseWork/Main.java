@@ -56,6 +56,7 @@ public class Main {
         System.out.println("Max capacity is: "+configuration.getMaximumTicketCapacity());
         System.out.println("Ticket release rate is: "+configuration.getTicketReleaseRate());
         System.out.println("Customer retrieval rate is: "+configuration.getCustomerRetrievalRate());
+        configuration.savetoTextFile();
         TicketPool ticketPool = new TicketPool(configuration);
 
 

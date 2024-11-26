@@ -12,7 +12,7 @@ public class TicketPool {
     private LinkedList<String> ticket;
     private static Configuration configuration;
     private Vendor vendor;
-    private Lock lock;
+    private final ReentrantLock lock = new ReentrantLock();
 
 
     public TicketPool(Configuration configuration) {
@@ -23,7 +23,7 @@ public class TicketPool {
 
 
     public synchronized void addTicket(String ticketAdingString) {
-        lock = new ReentrantLock();
+
         while (ticket.size()>= configuration.getTotalNumberOfTickets()){
 
             try {
@@ -32,15 +32,24 @@ public class TicketPool {
                 e.printStackTrace();
             }
         }
-
-        try{
-            lock.lock();
+        lock.lock();
+        try {
             this.ticket.add(ticketAdingString);
             System.out.println(ticketAdingString+" added to the pool");
             notifyAll();
-        }catch(Exception e){
+
+        }finally {
             lock.unlock();
         }
+
+//        try{
+//
+//            this.ticket.add(ticketAdingString);
+//            System.out.println(ticketAdingString+" added to the pool");
+//            notifyAll();
+//        }catch(Exception e){
+//            lock.unlock();
+//        }
 
 
 
@@ -48,7 +57,7 @@ public class TicketPool {
     }
 
     public synchronized void removeTicket(String ticketBuyingString) {
-        Lock lock = new ReentrantLock();
+
         while (ticket.isEmpty()){
             try {
                 wait();
@@ -57,15 +66,23 @@ public class TicketPool {
             }
 
         }
-
+        lock.lock();
         try {
-            lock.lock();
             this.ticket.remove(ticketBuyingString);
             System.out.println(ticketBuyingString+" removed from the pool");
             notifyAll();
-        }catch(Exception e){
+        }finally {
             lock.unlock();
         }
+
+//        try {
+//
+//            this.ticket.remove(ticketBuyingString);
+//            System.out.println(ticketBuyingString+" removed from the pool");
+//            notifyAll();
+//        }catch(Exception e){
+//            lock.unlock();
+//        }
 
 
 
