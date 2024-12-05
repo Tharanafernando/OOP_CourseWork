@@ -2,87 +2,84 @@ package OOP_CorseWork;
 
 
 import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.locks.Lock;
+
+import java.util.Queue;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Logger;
 
 
 public class TicketPool {
 
-    private LinkedList<String> ticket;
+    private Queue<Ticket> ticketQue;
     private static Configuration configuration;
     private Vendor vendor;
     private final ReentrantLock lock = new ReentrantLock();
+    private final Condition notFull = lock.newCondition();
+    private final Condition notEmpty = lock.newCondition();
+    private final Logger logger = Logger.getLogger(Vendor.class.getName());
 
 
     public TicketPool(Configuration configuration) {
-        ticket = new LinkedList<>();
-        this.configuration = configuration;
+        this.ticketQue = new LinkedList<>();
+        TicketPool.configuration = configuration;
     }
 
 
 
-    public synchronized void addTicket(String ticketAdingString) {
-
-        while (ticket.size()>= configuration.getTotalNumberOfTickets()){
-
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public void addTicket(Ticket ticket) {
         lock.lock();
-        try {
-            this.ticket.add(ticketAdingString);
-            System.out.println(ticketAdingString+" added to the pool");
-            notifyAll();
+        try{
+            while (ticketQue.size()>= configuration.getMaximumTicketCapacity()){
+
+                try {
+                    notFull.await();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+
+
+            this.ticketQue.add(ticket);
+            System.out.println(Thread.currentThread().getName()+" Ticket added to the pool. Ticket pool size is: "+ticketQue.size());
+
+            notEmpty.signalAll();
+
 
         }finally {
             lock.unlock();
         }
-
-//        try{
-//
-//            this.ticket.add(ticketAdingString);
-//            System.out.println(ticketAdingString+" added to the pool");
-//            notifyAll();
-//        }catch(Exception e){
-//            lock.unlock();
-//        }
-
-
-
-
     }
 
-    public synchronized void removeTicket(String ticketBuyingString) {
+    public void removeTicket() {
+        lock.lock();
+        try{
+            while (ticketQue.isEmpty()) {
+                try {
+                    notEmpty.await();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
 
-        while (ticket.isEmpty()){
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                }
+
             }
 
-        }
-        lock.lock();
-        try {
-            this.ticket.remove(ticketBuyingString);
-            System.out.println(ticketBuyingString+" removed from the pool");
-            notifyAll();
-        }finally {
+
+            Ticket ticket1 = ticketQue.poll();
+            notFull.signalAll();
+            System.out.println(Thread.currentThread().getName()+" bought tickets. Ticket pool size is "+ticketQue.size()+" "+ticket1.toString());
+
+
+        }finally{
             lock.unlock();
         }
 
-//        try {
-//
-//            this.ticket.remove(ticketBuyingString);
-//            System.out.println(ticketBuyingString+" removed from the pool");
-//            notifyAll();
-//        }catch(Exception e){
-//            lock.unlock();
-//        }
+
+
+
+
 
 
 

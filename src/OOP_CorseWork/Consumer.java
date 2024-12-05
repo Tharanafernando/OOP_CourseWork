@@ -1,48 +1,46 @@
 package OOP_CorseWork;
 
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Consumer implements Runnable {
     private final TicketPool ticketPool;
     private String name;
     private String NIC;
     private Configuration configuration;
+    private final int customerRate;
+    private final int quantity;
 
 
-    public Consumer(TicketPool ticketPool) {
+    public Consumer(TicketPool ticketPool,int customerRate,int quantity) {
         this.ticketPool = ticketPool;
-
+        this.customerRate = customerRate;
+        this.quantity = quantity;
 
 
     }
 
 
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
-    }
+//    public void setConfiguration(Configuration configuration) {
+//        this.configuration = configuration;
+//    }
 
     @Override
     public void run() {
         //configuration = new Configuration();
 
-        if(configuration == null) {
-            System.out.println("No configuration found");
-        }
+//        if(configuration == null) {
+//            System.out.println("No configuration found");
+//        }
 
 
         System.out.println("Customer thread is going to start...");
         
-        for (int i = 1; i < configuration.getMaximumTicketCapacity(); i++) {
-            ticketPool.removeTicket("Ticket bought: Ticket number "+i);
-
-
+        for (int i = 1; i <= quantity; i++) {
+            ticketPool.removeTicket();
         }
 
         try {
-            System.out.println("Customer waiting for tickets");
-            Thread.sleep(configuration.getCustomerRetrievalRate());
+            Thread.sleep(customerRate*1000L);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

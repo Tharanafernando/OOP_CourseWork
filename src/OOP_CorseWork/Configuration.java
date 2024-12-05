@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 public class Configuration {
     private int totalNumberOfTickets;
-    private long ticketReleaseRate;
-    private long customerRetrievalRate;
+    private int ticketReleaseRate;
+    private int customerRetrievalRate;
     private int maximumTicketCapacity;
 
-    public Configuration(int maximum,int total,long ticket, long customer) {
+    public Configuration(int maximum,int total,int ticket, int customer) {
         this.totalNumberOfTickets = total;
         this.ticketReleaseRate = ticket;
         this.customerRetrievalRate = customer;
@@ -50,7 +50,7 @@ public class Configuration {
 
     }
 
-    public void setTicketReleaseRate(long ticket) {
+    public void setTicketReleaseRate(int ticket) {
         if (ticket<=0){
             checkPositive(2);
         }else{
@@ -63,7 +63,7 @@ public class Configuration {
 
     }
 
-    public void setCustomerRetrievalRate(long customer) {
+    public void setCustomerRetrievalRate(int customer) {
         if (customer<=0){
             checkPositive(3);
         }else{
@@ -73,21 +73,22 @@ public class Configuration {
     }
 
     public void setMaximumTicketCapacity(int maximum) {
-        if(maximum<=0){
+        if(maximum<=1){
             checkPositive(4);
         }else {
             this.maximumTicketCapacity = maximum;
         }
 
-//        if (maximum>totalNumberOfTickets){
-//            System.out.println("Maximum number of tickets should lower than total number of tickets");
-//        }else{
-//            this.maximumTicketCapacity = maximum;
-//        }
+        if (maximum>totalNumberOfTickets){
+            System.out.println("Maximum number of tickets should lower than total number of tickets");
+            checkTotalAndMax();
+        }else{
+            this.maximumTicketCapacity = maximum;
+        }
 
     }
 
-
+    // check all parameter are greater than 0
     public void checkPositive(int num){
         Scanner input = new Scanner(System.in);
         switch(num){
@@ -107,8 +108,8 @@ public class Configuration {
             case 2:
                 while (true){
                     System.out.println("Please enter a positive number or greater than 0");
-                    long rate;
-                    rate = input.nextLong();
+                    int rate;
+                    rate = input.nextInt();
                     if(rate >0){
                         setTicketReleaseRate(rate);
                         break;
@@ -119,7 +120,7 @@ public class Configuration {
             case 3:
                 while (true){
                     System.out.println("Please enter a positive number or greater than 0");
-                    long customerRate;
+                    int customerRate;
                     customerRate = input.nextInt();
                     if(customerRate>0){
                         setCustomerRetrievalRate(customerRate);
@@ -132,13 +133,14 @@ public class Configuration {
             case 4:
 
                 while (true){
-                    System.out.println("Please enter a positive number or greater than 0");
+                    System.out.println("Max capacity should be more than 1");
                     int max;
                     max = input.nextInt();
                     if(max>0){
                         setMaximumTicketCapacity(max);
                         break;
                     }
+
 
                 }
 
@@ -150,27 +152,37 @@ public class Configuration {
 
     }
 
-    public void savetoTextFile(){
-        File myfile = new File("NewFile.txt");
-        try {
-            if(myfile.createNewFile()){
-                System.out.println("File Created");
-            }else{
-                System.out.println("File Already Exists");
+
+
+
+    // Check the maximum capacity is lower than total tickets
+    public void checkTotalAndMax(){
+        Scanner input = new Scanner(System.in);
+        while (true){
+            System.out.println("Max capacity should be less than total tickets: ");
+            int max;
+            max = input.nextInt();
+            if(max<totalNumberOfTickets){
+                setMaximumTicketCapacity(max);
+                break;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
         }
+
+    }
+
+    public void savetoTextFile(){
+
 
 
         try {
             FileWriter newFile = new FileWriter("NewFile.txt");
 
             newFile.write(
-                    "Maximum Capacity :"+getMaximumTicketCapacity()+ " "+
-                        "Total number of tickets: "+getTotalNumberOfTickets()+" "+
-                        "Ticket release rate: "+getTicketReleaseRate()+" "+
-                        "Customer retrieval rate: "+getTotalNumberOfTickets()
+                    "Maximum Capacity :"+getMaximumTicketCapacity()+ " \n"+
+                        "Total number of tickets: "+getTotalNumberOfTickets()+" \n"+
+                        "Ticket release rate: "+getTicketReleaseRate()+"\n "+
+                        "Customer retrieval rate: "+getCustomerRetrievalRate()
                          );
             newFile.close();
             System.out.println("Successfully write to the file");
