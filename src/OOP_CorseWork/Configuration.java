@@ -11,6 +11,8 @@ public class Configuration {
     private int customerRetrievalRate;
     private int maximumTicketCapacity;
 
+    public Configuration() {}
+
     public Configuration(int maximum,int total,int ticket, int customer) {
         this.totalNumberOfTickets = total;
         this.ticketReleaseRate = ticket;

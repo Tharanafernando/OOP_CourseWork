@@ -12,55 +12,65 @@ public class Vendor implements Runnable {
     private Configuration configuration;
     private final Logger logger = Logger.getLogger(Vendor.class.getName());
     private Ticket ticket;
-    private final int releaseRate;
-    private final int totalTickets;
+    private int total;
+    private int rate;
+    private final double price;
+    private String eventName;
 
 
 
-    public Vendor(TicketPool ticketPool,int rate,int totalTickets) {
+
+//    public Vendor(TicketPool ticketPool,Configuration configuration) {
+//        this.ticketPool = ticketPool;
+//        this.configuration = configuration;
+//
+//    }
+
+    public Vendor(TicketPool ticketPool,int total,int rate,double price,String eventName) {
         this.ticketPool = ticketPool;
-        this.releaseRate = rate;
-        this.totalTickets = totalTickets;
-
+        this.total = total;
+        this.rate = rate;
+        this.price = price;
+        this.eventName = eventName;
 
     }
 
 
 
-//    public void setConfiguration(Configuration configuration) {
-//        this.configuration = configuration;
-//    }
+
+
+
 
 
     @Override
     public void run() {
         Scanner input = new Scanner(System.in);
-       // configuration = new Configuration();
-//        ticket = new Ticket(0," ",0);
 
-//        if (configuration == null) {
-//            System.out.println("Configuration is null can not execute");
-//        }
 
 
         System.out.println("Vendor Thread is going to start....");
 
-        System.out.println("Event name");
-        String eventName = input.next();
+//        System.out.println("Event name");
+//        String eventName = input.next();
+//
+//        System.out.println("Ticket Price");
+//        int price = input.nextInt();
 
-        System.out.println("Ticket Price");
-        int price = input.nextInt();
+        while (!Thread.currentThread().isInterrupted()) {
+            for (int i = 1; i<= total;i++){
+                ticket = new Ticket(i,eventName,price);
+                ticketPool.addTicket(ticket);
+            }
 
-        for (int i = 1; i<= totalTickets;i++){
-            ticket = new Ticket(i,eventName,price);
-            ticketPool.addTicket(ticket);
+            try {
+                Thread.sleep(rate*1000L);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+
+            }
         }
 
-        try {
-            Thread.sleep(releaseRate*1000L);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+
 
 
 

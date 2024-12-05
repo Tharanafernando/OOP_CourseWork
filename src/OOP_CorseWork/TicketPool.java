@@ -39,8 +39,6 @@ public class TicketPool {
                     return;
                 }
             }
-
-
             this.ticketQue.add(ticket);
             System.out.println(Thread.currentThread().getName()+" Ticket added to the pool. Ticket pool size is: "+ticketQue.size());
 
@@ -65,8 +63,6 @@ public class TicketPool {
                 }
 
             }
-
-
             Ticket ticket1 = ticketQue.poll();
             notFull.signalAll();
             System.out.println(Thread.currentThread().getName()+" bought tickets. Ticket pool size is "+ticketQue.size()+" "+ticket1.toString());
